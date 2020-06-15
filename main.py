@@ -37,7 +37,7 @@ def show_rating(update, context):
 
         # Sorts the dict with the rating, turns it into a readable format
         rating = context.chat_data['rating']
-        rating = {key: value for key, value in rating(rating.items(), key=lambda x: x[1], reverse=True)}
+        rating = {key: value for key, value in sorted(rating.items(), key=lambda x: x[1], reverse=True)}
         text = '\n'.join([f"{num + 1}. {item[1][0]}: {item[1][1]} виграші" for num, item in enumerate(rating.items())])
         reply_text = f"Рейтинг гравців у цьому чаті:\n{text}"
         update.message.reply_text(reply_text, parse_mode="Markdown")
