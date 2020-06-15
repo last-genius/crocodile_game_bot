@@ -76,8 +76,8 @@ def start(update, context):
     # Reads the user data and makes up a message with a link
     user_data = update['message'].from_user
     first_name = user_data['first_name'] if user_data['first_name'] is not None else ""
-    last_name = user_data['last_name'] if user_data['last_name'] is not None else ""
-    reply_text = f"[{first_name} {last_name}](tg://user?id={user_data['id']}) пояснює слово!"
+    last_name = f" user_data['last_name']" if user_data['last_name'] is not None else ""
+    reply_text = f"[{first_name}{last_name}](tg://user?id={user_data['id']}) пояснює слово!"
 
     context.chat_data['is_playing'] = True
     context.chat_data['current_player'] = user_data['id']
@@ -129,13 +129,13 @@ def guesser(update, context):
             rating = context.chat_data['rating']
 
         first_name = user_data['first_name'] if user_data['first_name'] is not None else ""
-        last_name = user_data['last_name'] if user_data['last_name'] is not None else ""
+        last_name = f" user_data['last_name']" if user_data['last_name'] is not None else ""
 
         if user_data['id'] in rating:
-            rating[user_data['id']] = [f"[{first_name} {last_name}](tg://user?id={user_data['id']})",
+            rating[user_data['id']] = [f"[{first_name}{last_name}](tg://user?id={user_data['id']})",
                                        rating[user_data['id']][1] + 1]
         else:
-            rating[user_data['id']] = [f"[{first_name} {last_name}](tg://user?id={user_data['id']})", 1]
+            rating[user_data['id']] = [f"[{first_name}{last_name}](tg://user?id={user_data['id']})", 1]
 
         # Save the temporary variables, id of the winner and time of the win
         context.chat_data['rating'] = rating
@@ -147,7 +147,7 @@ def guesser(update, context):
         keyboard = [[InlineKeyboardButton("Я хочу пояснювати наступним!", callback_data="next_player")]]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
-        reply_text = f"{first_name} {last_name} вгадав слово!"
+        reply_text = f"[{first_name}{last_name}](tg://user?id={user_data['id']}) вгадав слово!"
         update.message.reply_text(reply_text, reply_markup=reply_markup, parse_mode="Markdown")
 
         # Changing the state to CHOOSING_PLAYER
@@ -179,8 +179,8 @@ def next_player(update, context):
 
         # Update the temporary variables, edit the text
         first_name = query.from_user['first_name'] if query.from_user['first_name'] is not None else ""
-        last_name = query.from_user['last_name'] if query.from_user['last_name'] is not None else ""
-        reply_text = f"[{first_name} {last_name}](tg://user?id={query.from_user['id']}) пояснює слово!"
+        last_name = f" user_data['last_name']" if query.from_user['last_name'] is not None else ""
+        reply_text = f"[{first_name}{last_name}](tg://user?id={query.from_user['id']}) пояснює слово!"
 
         context.chat_data["current_player"] = query.from_user['id']
         context.chat_data['current_word'] = choice(WORDS)
