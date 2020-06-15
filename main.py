@@ -23,7 +23,7 @@ GUESSING, CHOOSING_PLAYER = range(2)
 
 WORDS = []
 with open("words.txt", "r", encoding="UTF-8", errors="ignore") as file:
-    for line in file.read().split(", "):
+    for line in file.readlines():
         WORDS.append(line.replace("\n", ""))
 shuffle(WORDS)
 
